@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {theme} from '../utils/theme';
 import HomeScreen from '../screen/HomeScreen';
 import AddServer from '../screen/Server/AddServer';
+import ServerHomeScreen from "../screen/Server/ServerHomeScreen";
 
 const Stack = createStackNavigator();
 const MainNavigation = () => {
@@ -26,6 +27,13 @@ const MainNavigation = () => {
         component={AddServer}
         options={{
           title: 'Add New Server',
+        }}
+      />
+      <Stack.Screen
+        name="ServerHomepage"
+        component={ServerHomeScreen}
+        options={{
+          title: 'Server Home Page',
         }}
       />
     </Stack.Navigator>

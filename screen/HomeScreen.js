@@ -1,11 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  Pressable,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {View, StyleSheet, Pressable, Alert} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
@@ -36,6 +30,11 @@ const HomeScreen = ({navigation}) => {
       Alert.alert('Error', 'Error');
     }
   };
+
+  const activateServer = server => {
+    dispatch(setCredentials(server));
+    navigation.navigate('ServerHomepage');
+  };
   return (
     <Background>
       <Logo />
@@ -43,12 +42,16 @@ const HomeScreen = ({navigation}) => {
       <Button onPress={() => navigation.navigate('AddServer')} mode="contained">
         Add New Server
       </Button>
-      <View style={{flex: 1}}>
-        <Pressable>
-          <Surface style={styles.surface}>
-            <Text>Server 1</Text>
-          </Surface>
-        </Pressable>
+      <View style={{flex: 1, flexDirection: 'row'}}>
+        {servers.map((s, i) => {
+          return (
+            <Pressable key={i} onPress={() => activateServer(s)}>
+              <Surface style={styles.surface}>
+                <Text>{s.name}</Text>
+              </Surface>
+            </Pressable>
+          );
+        })}
       </View>
     </Background>
   );

@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import TextInput from '../../components/TextInput';
 import {isServerExist, isValidUrl, retrieveServer} from '../../utils/common';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import {useDispatch} from 'react-redux';
 
 const initialValue = {
   name: '',
@@ -17,7 +18,7 @@ const serverSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
   base_url: Yup.string()
     .test('is-url-valid', 'URL is not valid', value => isValidUrl(value))
-    .test('is-url-exist', 'URL already exist', value => isServerExist(value))
+    .test('is-url-exist', 'URL already exist.', value => isServerExist(value))
     .required('Please enter website'),
   api_key: Yup.string().required('Api key is required.'),
 });
@@ -25,8 +26,7 @@ const serverSchema = Yup.object().shape({
 const AddServer = ({navigation}) => {
   const submit = async values => {
     const serverList = await retrieveServer();
-    const newServerList = JSON.parse(serverList).concat(values);
-    console.log(newServerList);
+    const newServerList = serverList.concat(values);
     try {
       await EncryptedStorage.setItem(
         'server_list',

@@ -3,7 +3,8 @@ import {createSlice} from '@reduxjs/toolkit';
 const initialState = {
   loading: false,
   api_key: '',
-  server_url: '',
+  base_url: '',
+  name: '',
   error: null,
   success: false,
 };
@@ -12,8 +13,9 @@ export const ServerSlice = createSlice({
   name: 'server',
   initialState,
   reducers: {
-    setCredentials: (state, {payload: {server_url, api_key}}) => {
-      state.server_url = server_url;
+    setCredentials: (state, {payload: {base_url, api_key, name}}) => {
+      state.base_url = base_url;
+      state.name = name;
       state.api_key = api_key;
     },
   },

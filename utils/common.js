@@ -14,7 +14,7 @@ async function retrieveServer() {
     const session = await EncryptedStorage.getItem('server_list');
 
     if (session) {
-      return session;
+      return JSON.parse(session);
     } else {
       return [];
     }
@@ -24,17 +24,17 @@ async function retrieveServer() {
 }
 
 const isServerExist = server => {
-  let exist = false;
-  retrieveServer().then(serverList => {
+  return retrieveServer().then(serverList => {
     const isExist = serverList.filter(s => {
       return s.base_url === server;
     }).length;
-    console.log(isExist);
     if (isExist !== 0) {
-      exist = true;
+      console.log(isExist);
+      return false;
+    } else {
+      return true;
     }
   });
-  return exist;
 };
 
 export {isValidUrl, retrieveServer, isServerExist};
